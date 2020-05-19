@@ -71,8 +71,20 @@ kind: Service
 metadata:
   name: azure-vote-front
 spec:
-  type: LoadBalancer
   ports:
   - port: 80
   selector:
     app: azure-vote-front
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: azure-vote
+spec:
+  rules:
+  - host: xip.io
+    http:
+      paths:
+      - backend:
+          serviceName: azure-vote-front
+          servicePort: 80
